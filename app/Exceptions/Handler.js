@@ -7,7 +7,7 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (error.name === 'ValidationException') {
       return response.status(error.status).send(error.messages)
     }
-    return error
+    return response.status(500).send(error)
   }
 
   async report (error, { request }) {}
