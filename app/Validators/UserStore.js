@@ -1,6 +1,6 @@
 'use strict'
 
-class User {
+class UserStore {
   get validateAll () {
     return true
   }
@@ -14,4 +14,4 @@ class User {
   }
 }
 
-module.exports = User
+module.exports = UserStore

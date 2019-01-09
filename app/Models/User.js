@@ -8,10 +8,14 @@ class User extends Model {
     super.boot()
 
     this.addHook('beforeSave', async userInstance => {
-      if (userInstance.password || userInstance.dirty.password) {
+      if (userInstance.dirty.password) {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
+  }
+
+  async checkPassword (password) {
+    return Hash.verify(password, this.password)
   }
 
   tokens () {
