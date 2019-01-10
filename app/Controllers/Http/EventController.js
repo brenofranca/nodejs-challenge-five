@@ -14,6 +14,18 @@ class EventController {
 
   async store ({ params, request, response }) {
     const data = await request.only(['title', 'localization', 'date'])
+    const date = request.input('date')
+
+    const countEvents = await Event.query()
+      .where('user_id', params.users_id)
+      .where('date', date)
+      .getCount()
+
+    if (countEvents > 0) {
+      return response.status(401).send({
+        error: { message: 'Você já possui um evento cadastro para essa data.' }
+      })
+    }
 
     const event = await Event.create({ ...data, user_id: params.users_id })
 
@@ -31,6 +43,12 @@ class EventController {
 
     const event = await Event.findOrFail(params.id)
 
+    if (event.isExpired()) {
+      return response.status(401).send({
+        error: { message: 'A data do evento já passou.' }
+      })
+    }
+
     if (event.user_id !== auth.user.id) {
       return response.status(401).send({
         error: { message: 'Você não está autorizado a excluir esse evento.' }
@@ -46,6 +64,12 @@ class EventController {
 
   async destroy ({ params, auth, response }) {
     const event = await Event.findOrFail(params.id)
+
+    if (event.isExpired()) {
+      return response.status(401).send({
+        error: { message: 'A data do evento já passou.' }
+      })
+    }
 
     if (event.user_id !== auth.user.id) {
       return response.status(401).send({

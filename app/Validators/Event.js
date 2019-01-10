@@ -2,15 +2,16 @@
 
 const Antl = use('Antl')
 
-class Session {
+class Event {
   get validateAll () {
     return true
   }
 
   get rules () {
     return {
-      email: 'required|email',
-      password: 'required'
+      title: 'required',
+      localization: 'required',
+      date: 'required|date'
     }
   }
 
@@ -19,4 +20,4 @@ class Session {
   }
 }
 
-module.exports = Session
+module.exports = Event

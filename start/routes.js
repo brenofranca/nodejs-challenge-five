@@ -15,5 +15,11 @@ Route.resource('users', 'UserController')
 Route.resource('users.events', 'EventController')
   .apiOnly()
   .middleware(['auth'])
+  .validator(
+    new Map([
+      [['users.events.store'], ['Event']],
+      [['users.events.update'], ['Event']]
+    ])
+  )
 
 Route.post('sessions', 'SessionController.store').validator('Session')
