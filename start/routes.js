@@ -22,4 +22,7 @@ Route.resource('users.events', 'EventController')
     ])
   )
 
+Route.post('events/:id/share', 'EventShareController.store')
+  .middleware(['auth'])
+  .validator('EventShare')
 Route.post('sessions', 'SessionController.store').validator('Session')
