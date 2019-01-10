@@ -12,4 +12,8 @@ Route.resource('users', 'UserController')
     ])
   )
 
+Route.resource('users.events', 'EventController')
+  .apiOnly()
+  .middleware(['auth'])
+
 Route.post('sessions', 'SessionController.store').validator('Session')
