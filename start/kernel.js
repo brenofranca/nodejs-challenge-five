@@ -12,9 +12,7 @@ const Server = use('Server')
 | match.
 |
 */
-const globalMiddleware = [
-  'Adonis/Middleware/BodyParser'
-]
+const globalMiddleware = ['Adonis/Middleware/BodyParser']
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +51,6 @@ const serverMiddleware = [
   'Adonis/Middleware/Cors'
 ]
 
-Server
-  .registerGlobal(globalMiddleware)
+Server.registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
   .use(serverMiddleware)
